@@ -1,0 +1,25 @@
+body {
+	background-image: linear-gradient(
+		to right,
+		rgba(114, 114, 236, 0.523),
+		rgba(218, 112, 184, 0.54)
+	);
+}
+
+header {
+	background-color: aliceblue;
+}
+
+h1 {
+	text-align: center;
+	font-family: "Lucida Sans";
+}
+
+main {
+	text-align: center;
+	font-family: Verdana;
+}
+
+div {
+	font-family: Arial;
+}
