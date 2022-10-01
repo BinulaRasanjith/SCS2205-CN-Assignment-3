@@ -1,4 +1,3 @@
-from re import L
 from socket import socket, AddressFamily, SocketKind
 from os import path, getcwd
 
@@ -44,7 +43,7 @@ while True:
     print("Got connected from ", client_address)
 
     # getting the request from the client
-    client_request = client_socket.recv(1024).decode()
+    client_request = client_socket.recv(1024).decode(errors='ignore')
 
     # splitting http headers from the request and store it in a array
     http_headers = client_request.split('\r\n')
