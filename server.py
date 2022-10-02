@@ -5,25 +5,6 @@ LOCALHOST = '127.0.0.1'
 PORT = 2728
 
 
-def get_resource_path(http_path):
-    # if http_path endswith '/' remove it
-    if http_path.endswith('/'):
-        http_path = http_path[:-1]
-    print(http_path)
-    # spliting http_path from '.'
-    path_seg = http_path.split('.')
-    if http_path != '':  # if http_path is not a empty string
-        if len(path_seg) > 1:  # if there are '.' there could be an extension in the path
-            # therefore resource path is relevent resource from the htdocs folder
-            resource_path = path.join(getcwd(), 'htdocs', http_path[1:])
-        else:  # if there is no '.' in the path add '.html' to the http path
-            resource_path = path.join(getcwd(), 'htdocs', f'{http_path[1:]}.html')
-    else:  # if the http_path is a empty string give the index.html as the resource path
-        resource_path = path.join(getcwd(), 'htdocs', 'index.html')
-    print(resource_path, '\n-----------------------------')
-    return resource_path
-
-
 # AF_INET -> ipv4, SOCK_STREAM -> TCP/IP protocol
 server_socket = socket(AddressFamily.AF_INET, SocketKind.SOCK_STREAM)
 print('Serever socket created successfully')
@@ -54,10 +35,30 @@ while True:
     try:  # using try-except to catch the errors
         # getting the http url from the 1st header
         http_url = http_header_0[1]
+
         # removing any queries from the url
         http_path = http_url.split('?')[0]
-        # getting the resource path according to the http path
-        resource_path = get_resource_path(http_path)
+
+        # if http_path endswith '/' remove it
+        if http_path.endswith('/'):
+            http_path = http_path[:-1]
+        print(http_path)
+
+        # spliting http_path from '.'
+        path_seg = http_path.split('.')
+
+        if http_path != '':  # if http_path is not a empty string
+            if len(path_seg) > 1:  # if there are '.' there could be an extension in the path
+                # therefore resource path is relevent resource from the htdocs folder
+                resource_path = path.join(getcwd(), 'htdocs', http_path[1:])
+
+            else:  # if there is no '.' in the path add '.html' to the http path
+                resource_path = path.join(
+                    getcwd(), 'htdocs', f'{http_path[1:]}.html')
+
+        else:  # if the http_path is a empty string give the index.html as the resource path
+            resource_path = path.join(getcwd(), 'htdocs', 'index.html')
+        print(resource_path, '\n-----------------------------')
 
         try:  # using try-except to catch the errors
             # opening the relevent resource
